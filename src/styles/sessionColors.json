@@ -1,0 +1,16 @@
+{
+  "header":[
+    {
+      "bgColor": "#000000",
+      "textColor":"#ffffff"
+    },
+    {
+      "bgColor":"#ffffff",
+      "textColor": "#000000"
+    },
+    {
+      "bgColor": "#000000",
+      "textColor":"#ffffff"
+    }
+  ]
+}

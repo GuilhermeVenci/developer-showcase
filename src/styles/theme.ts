@@ -4,19 +4,22 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#FF5A5F',
+      main: '#cc147f',
+      //main: '#ff5a5f',
     },
     secondary: {
-      main: '#00A699',
+      main: '#26bfb5',
+      //main: '#00A699',
     },
     error: {
       main: '#D93900',
     },
     background: {
-      default: '#F7F7F7',
+      default: '#000000',
+      //default: '#F7F7F7',
     },
     text: {
-      primary: '#484848',
+      primary: '#111111 !important',
     },
   },
   typography: {
@@ -32,8 +35,10 @@ const theme = createTheme({
       fontWeight: 600,
     },
     h1: {
-      fontSize: '2.25rem',
+      fontSize: '3rem',
+      //fontSize: '2.25rem',
       lineHeight: 1.2,
+      fontWeight: 'bold',
     },
     h2: {
       fontSize: '1.5rem',
