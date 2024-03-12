@@ -1,7 +1,7 @@
 'use client';
-import { createTheme } from '@mui/material/styles';
+import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 
-const theme = createTheme({
+let theme = createTheme({
   palette: {
     primary: {
       main: '#cc147f',
@@ -24,32 +24,45 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: '"Roboto", "Open Sans", sans-serif',
-    // Exemplo de ajuste de line-height e letter-spacing
+
     body1: {
       fontSize: '1rem',
       lineHeight: 1.5, // Valor padrão para boa legibilidade
       letterSpacing: '0.00938em', // Ajuste sutil para melhorar a clareza
+      fontWeight: 600,
     },
     button: {
-      textTransform: 'none', // Airbnb tende a evitar maiúsculas em botões
+      textTransform: 'none',
       fontWeight: 600,
     },
     h1: {
-      fontSize: '3rem',
-      //fontSize: '2.25rem',
-      lineHeight: 1.2,
+      fontSize: '6rem',
+      lineHeight: 1,
       fontWeight: 'bold',
     },
     h2: {
-      fontSize: '1.5rem',
+      fontSize: '3rem',
       lineHeight: 1.3,
     },
+    h3: {
+      fontSize: '2.25rem',
+      lineHeight: 1.3,
+    },
+    h6: {
+      fontSize: '1.15rem',
+      lineHeight: 1.5,
+    },
   },
-  spacing: 8, // O valor padrão do MUI é 8; ajuste conforme necessário
+  spacing: 8, // O valor padrão do MUI é 8;
   shape: {
     borderRadius: 8,
   },
-  //shadows: ['none', '0 4px 6px rgba(0,0,0,0.1)'],
+});
+
+// Aplica a função responsiveFontSizes para tornar as fontes responsivas
+theme = responsiveFontSizes(theme, {
+  breakpoints: ['xs', 'md', 'lg'], // Os breakpoints que você deseja que a função manipule
+  factor: 1.5, // O fator de variação do tamanho da fonte entre os breakpoints;
 });
 
 export default theme;

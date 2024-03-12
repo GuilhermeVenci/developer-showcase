@@ -1,7 +1,7 @@
 // components/BrandIcon.js
 import React from 'react';
 
-const BrandIcon = ({ color = '#000000' }) => (
+const BrandIcon = ({ color }: { color: string }) => (
   <svg
     version="1.0"
     xmlns="http://www.w3.org/2000/svg"

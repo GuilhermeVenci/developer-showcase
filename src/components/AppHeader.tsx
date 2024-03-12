@@ -7,7 +7,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Image from 'next/image';
 import BrandIcon from './BrandIcon';
 import {
   Button,
@@ -18,6 +17,7 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
+  useTheme,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import sessionColors from '@/styles/sessionColors.json';
@@ -28,7 +28,7 @@ interface Props {
   background: string;
 }
 
-const drawerWidth = 240;
+const drawerWidth = 340;
 const navItems = ['Sobre', 'Projetos', 'Contato'];
 
 function ElevationScroll({ children, window, background }: Props) {
@@ -43,6 +43,7 @@ function ElevationScroll({ children, window, background }: Props) {
     sx: {
       backgroundColor: background,
       transition: 'background-color 0.3s',
+      zIndex: 98,
     },
   });
 }
@@ -53,10 +54,12 @@ export default function AppHeader({
 }: {
   children: React.ReactNode;
 }) {
+  const theme = useTheme();
   const colorList = sessionColors.header;
   const [currentColors, setCurrentColors] = useState({
     background: 'transparent',
     text: colorList[0].textColor,
+    icon: colorList[0].iconColor || theme.palette.secondary.main,
   });
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -65,7 +68,7 @@ export default function AppHeader({
   };
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'left', zIndex: 99 }}>
       <Typography variant="h6" sx={{ my: 2 }}>
         MUI
       </Typography>
@@ -73,7 +76,7 @@ export default function AppHeader({
       <List>
         {navItems.map((item) => (
           <ListItem key={item} disablePadding>
-            <ListItemButton sx={{ textAlign: 'center' }}>
+            <ListItemButton sx={{ textAlign: 'left' }}>
               <ListItemText primary={item} />
             </ListItemButton>
           </ListItem>
@@ -82,13 +85,17 @@ export default function AppHeader({
     </Box>
   );
 
-  const container = !!window ? () => window.document.body : undefined;
+  const container =
+    typeof window !== 'undefined' ? () => window.document.body : undefined;
 
   useEffect(() => {
     const handleScroll = () => {
       const index = Math.floor((window.scrollY + 64) / window.innerHeight);
       setCurrentColors({
         text: colorList[index % colorList.length].textColor,
+        icon:
+          colorList[index % colorList.length].iconColor ||
+          theme.palette.secondary.main,
         background:
           window.scrollY === 0
             ? 'transparent'
@@ -102,7 +109,7 @@ export default function AppHeader({
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [colorList]);
+  }, [colorList, theme]);
 
   return (
     <React.Fragment>
@@ -112,34 +119,50 @@ export default function AppHeader({
           <Container maxWidth="xl">
             <Toolbar
               sx={{
-                pr: { sm: 3, xs: 0 },
+                px: { sm: 3, xs: 0 },
               }}
             >
-              <BrandIcon color={currentColors.text} />
-              <Typography
-                variant="h6"
-                fontWeight={300}
-                sx={{ color: currentColors.text }}
-                ml={2}
-              >
-                Showcase
-              </Typography>
-              <Typography
-                variant="h6"
-                fontWeight="bold"
-                sx={{ color: currentColors.text }}
-              >
-                Developer
-              </Typography>
+              <Box display="flex" flexDirection="row">
+                <BrandIcon color={currentColors.icon} />
+                <Typography
+                  variant="h6"
+                  fontWeight={300}
+                  sx={{ color: currentColors.text }}
+                  ml={2}
+                >
+                  Showcase
+                </Typography>
+                <Typography
+                  variant="h6"
+                  fontWeight="bold"
+                  sx={{ color: currentColors.text }}
+                >
+                  Developer
+                </Typography>
+              </Box>
               <Box
                 sx={{
                   flexGrow: 1,
                   justifyContent: 'flex-end',
                   display: { xs: 'none', sm: 'flex' },
                 }}
+                columnGap={2}
               >
-                {navItems.map((item) => (
-                  <Button key={item} sx={{ color: currentColors.text }}>
+                {navItems.map((item, index) => (
+                  <Button
+                    key={item}
+                    disableRipple
+                    disableElevation
+                    variant={
+                      navItems.length !== index + 1 ? 'text' : 'contained'
+                    }
+                    sx={{
+                      color:
+                        navItems.length !== index + 1
+                          ? currentColors.text
+                          : 'white',
+                    }}
+                  >
                     {item}
                   </Button>
                 ))}
@@ -156,7 +179,7 @@ export default function AppHeader({
                   edge="start"
                   onClick={handleDrawerToggle}
                   sx={{
-                    color: currentColors.text,
+                    color: currentColors.icon,
                     display: { sm: 'none' },
                   }}
                 >

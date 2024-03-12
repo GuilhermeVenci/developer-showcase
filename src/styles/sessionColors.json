@@ -6,7 +6,8 @@
     },
     {
       "bgColor":"#ffffff",
-      "textColor": "#000000"
+      "textColor": "#000000",
+      "iconColor": "#cc147f"
     },
     {
       "bgColor": "#000000",

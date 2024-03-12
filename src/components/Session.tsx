@@ -5,19 +5,26 @@ interface Props {
   children: React.ReactNode;
   bgColor?: string;
   first?: boolean;
+  centralized?: boolean;
 }
 
-const Session = ({ children, first, bgColor, ...props }: Props) => {
+const Session = ({
+  children,
+  first,
+  bgColor,
+  centralized,
+  ...props
+}: Props) => {
   return (
     <Box sx={{ backgroundColor: bgColor || 'white' }} {...props}>
       <Container
         maxWidth="lg"
         sx={{
-          // minHeight: first ? 'calc(100vh - 64px)' : '100vh',
-          minHeight: '100vh',
           display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
+          minHeight: '100vh',
+          paddingTop: first ? 8 : 0,
+          justifyContent: centralized ? 'center' : 'flex-start',
+          alignItems: centralized ? 'center' : 'flex-start',
         }}
       >
         {children}
